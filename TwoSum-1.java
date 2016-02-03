@@ -6,17 +6,16 @@ The function twoSum should return indices of the two numbers such that they add 
 You may assume that each input would have exactly one solution.
 */
 public class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        int[] result = new int[2];
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int i = 0; i < numbers.length; i++) {
-            if (map.containsKey(numbers[i])) {
-                result[0] = map.get(numbers[i]);
-                result[1] = i + 1;
-                break;
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> m = new HashMap();
+        int n = nums.length;
+        for(int i = 0; i < n; i++) {
+            if(m.get(target - nums[i]) != null) {
+                return new int[] {m.get(target - nums[i]) + 1, i + 1};
+            } else {
+                m.put(nums[i], i);
             }
-            map.put(target - numbers[i], i + 1);
         }
-        return result;
+        return new int[] {-1, -1};
     }
 }
