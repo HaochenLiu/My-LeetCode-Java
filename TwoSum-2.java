@@ -5,6 +5,7 @@ The function twoSum should return indices of the two numbers such that they add 
 
 You may assume that each input would have exactly one solution.
 */
+
 public class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int[] result = new int[2];
