@@ -21,35 +21,21 @@ Given m, n satisfy the following condition:
  */
 public class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null || head.next == null) return head;
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode cur = dummy;
-        ListNode middle;
-        ListNode tail;
-        for (; cur.next != null && n > 0; cur = cur.next, n--);
-        tail = cur.next;
-        cur.next = null;
-        cur = dummy;
-        for (; cur.next != null && m > 1; cur = cur.next, m--);
-        middle = cur.next;
-        cur.next = null;
-        cur.next = reverse(middle);
-        for (; cur.next != null; cur = cur.next);
-        cur.next = tail;
-        return dummy.next;
-    }
-
-    public ListNode reverse(ListNode head) {
-        if (head == null)
-            return head;
-        ListNode pre = head;
-        ListNode cur = head.next;
-        while (cur != null) {
-            pre.next = cur.next;
-            cur.next = head;
-            head = cur;
-            cur = pre.next;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        for (int i = 0; i < m - 1; i++) {
+            pre = pre.next;
         }
-        return head;
+        cur = pre.next;
+        for (int i = 0; i < n - m; i++) {
+            ListNode move = cur.next;
+            cur.next = move.next;
+            move.next = pre.next;
+            pre.next = move;
+        }
+        return dummy.next;
     }
 }
