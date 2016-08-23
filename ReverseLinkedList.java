@@ -17,16 +17,17 @@ A linked list can be reversed either iteratively or recursively. Could you imple
  */
 public class Solution {
     public ListNode reverseList(ListNode head) {
-        if (head == null)
-            return head;
-        ListNode pre = head;
-        ListNode cur = head.next;
-        while (cur != null) {
-            pre.next = cur.next;
-            cur.next = head;
-            head = cur;
-            cur = pre.next;
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while (cur.next != null) {
+            ListNode move = cur.next;
+            cur.next = move.next;
+            move.next = pre.next;
+            pre.next = move;
         }
-        return head;
+        return dummy.next;
     }
 }
