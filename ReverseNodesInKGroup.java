@@ -24,39 +24,35 @@ For k = 3, you should return: 3->2->1->4->5
  * }
  */
 public class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-        if(head == null || head.next == null)
-            return head;
-        ListNode cur = head;
-        for(int i = 1; i < k; i++) {
-            if(cur.next != null)
-                cur = cur.next;
-            else
-                return head;
+    private int getCnt(ListNode node) {
+        int res = 0;
+        while(node != null) {
+            node = node.next;
+            res++;
         }
-        ListNode toBeProcess = cur.next;
-        cur.next = null;
-        head = reverse(head);
-        cur = head;
-        while(cur.next != null) {
-            cur = cur.next;
-        }
-        cur.next = reverseKGroup(toBeProcess, k);
-        return head;
+
+        return res;
     }
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || head.next == null || k < 2) return head;
+        int reverseTime = getCnt(head) / k;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
 
-    public ListNode reverse(ListNode head) {
-        if(head == null || head.next == null)
-            return head;
-        ListNode p = head.next;
-        head.next = null;
-        while(p != null) {
-            ListNode q = p.next;
-            p.next = head;
-            head = p;
-            p = q;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        
+        for(int i = 0; i < reverseTime; i++) {
+            for(int j = 0; j < k - 1; j++) {
+                ListNode move = cur.next;
+                cur.next = move.next;
+                move.next = pre.next;
+                pre.next = move;
+            }
+            pre = cur;
+            cur = pre.next;
         }
-        return head;
+        return dummy.next;
     }
 }
