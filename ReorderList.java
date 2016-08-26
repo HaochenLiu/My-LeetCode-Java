@@ -18,17 +18,18 @@ Given {1,2,3,4}, reorder it to {1,4,2,3}.
  */
 public class Solution {
     public ListNode reverseList(ListNode head) {
-        if (head == null)
-            return head;
-        ListNode prev = head;
-        ListNode cur = prev.next;
-        while (cur != null) {
-            prev.next = cur.next;
-            cur.next = head;
-            head = cur;
-            cur = prev.next;
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while (cur.next != null) {
+            ListNode move = cur.next;
+            cur.next = move.next;
+            move.next = pre.next;
+            pre.next = move;
         }
-        return head;
+        return dummy.next;
     }
 
     public void reorderList(ListNode head) {
